@@ -11,6 +11,7 @@
     --text-gray: #b0b8c4;
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
+    --font-old-english: 'UnifrakturMaguntia', cursive;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --glow-cyan: 0 0 15px rgba(0, 243, 255, 0.3);
     --glow-green: 0 0 15px rgba(0, 255, 157, 0.3);
@@ -36,11 +37,17 @@ body {
     font-weight: 300;
 }
 
+.logo-text {
+    font-family: var(--font-old-english);
+    font-weight: 400;
+    /* Old English fonts are usually bold by default */
+    letter-spacing: 1px;
+}
+
 h1,
 h2,
 h3,
-h4,
-.logo-text {
+h4 {
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -290,15 +297,17 @@ ul {
 }
 
 .hero-title {
+    font-family: var(--font-old-english);
     font-size: 5rem;
-    font-weight: 800;
+    font-weight: 400;
     background: linear-gradient(10deg, #ffffff 0%, #b4b4b4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
-    letter-spacing: -2px;
+    letter-spacing: 1px;
     line-height: 1.1;
-    text-transform: uppercase;
+    text-transform: none;
+    /* Old English is often hard to read in all caps */
 }
 
 .hero-subtitle {
@@ -500,6 +509,13 @@ ul {
     /* slightly larger cards: allow more minimum width */
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 28px;
+}
+
+@media (max-width: 480px) {
+    .partners-grid {
+        grid-template-columns: 1fr;
+        /* 1 card per row on very small screens */
+    }
 }
 
 .partner-card {
@@ -795,6 +811,44 @@ input::placeholder {
     /* Form */
     .form-row {
         grid-template-columns: 1fr;
+    }
+
+    /* Sticky Submit Button on Mobile */
+    .submit-btn {
+        position: sticky;
+        bottom: 20px;
+        z-index: 100;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .partners-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        /* Force 1 or 2 columns based on width */
+    }
+
+    .hero {
+        min-height: 100vh;
+        /* Allow it to be exactly screen height on mobile */
+    }
+
+    .logo-text {
+        font-size: 1rem;
+        /* Prevent overflow on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .container {
+        width: 94%;
+        padding: 0 15px;
     }
 }
 
