@@ -11,7 +11,7 @@
     --text-gray: #b0b8c4;
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
-    --font-old-english: 'UnifrakturMaguntia', cursive;
+    /* --font-old-english: 'UnifrakturMaguntia', cursive; Removed as requested */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --glow-cyan: 0 0 15px rgba(0, 243, 255, 0.3);
     --glow-green: 0 0 15px rgba(0, 255, 157, 0.3);
@@ -37,11 +37,8 @@ body {
     font-weight: 300;
 }
 
-.logo-text {
-    font-family: var(--font-old-english);
-    font-weight: 400;
-    /* Old English fonts are usually bold by default */
-    letter-spacing: 1px;
+/* Old English fonts are usually bold by default */
+letter-spacing: 1px;
 }
 
 h1,
@@ -152,6 +149,15 @@ ul {
     transition: padding 0.3s;
 }
 
+/* Ensure logo text stays on one line on small screens if possible, or wraps nicely */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1001;
+    /* Keep logo above mobile menu overlay if needed, or just let menu cover */
+}
+
 .navbar.scrolled {
     padding: 10px 0;
     background: rgba(5, 10, 20, 0.95);
@@ -193,6 +199,8 @@ ul {
     font-size: 1.25rem;
     color: var(--text-white);
     font-weight: 700;
+    font-family: var(--font-heading);
+    /* Updated to Outfit */
 }
 
 .nav-menu {
@@ -297,16 +305,19 @@ ul {
 }
 
 .hero-title {
-    font-family: var(--font-old-english);
+    font-family: var(--font-heading);
+    /* Updated to Outfit */
     font-size: 5rem;
-    font-weight: 400;
+    font-weight: 800;
+    /* Bolder for impact */
     background: linear-gradient(10deg, #ffffff 0%, #b4b4b4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
     letter-spacing: 1px;
     line-height: 1.1;
-    text-transform: none;
+    text-transform: uppercase;
+    /* Uppercase for modern look */
     /* Old English is often hard to read in all caps */
 }
 
@@ -747,41 +758,75 @@ input::placeholder {
    ========================================= */
 @media (max-width: 768px) {
     .section-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        margin-bottom: 3rem;
     }
 
     .hero-title {
         font-size: 3rem;
+        /* Reduced from 5rem */
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         letter-spacing: 2px;
+    }
+
+    .hero-organizer {
+        font-size: 1rem;
     }
 
     /* Navbar Mobile */
     .menu-toggle {
         display: flex;
+        z-index: 1001;
+        /* Above the menu background */
     }
 
     .nav-menu {
         position: fixed;
-        top: -100%;
-        left: 0;
+        top: 0;
+        right: -100%;
+        /* Slide from right */
+        left: auto;
+        /* Reset left */
         flex-direction: column;
-        background: var(--bg-dark);
-        width: 100%;
-        padding: 50px 0;
-        transition: 0.4s ease-in-out;
-        border-bottom: 1px solid var(--primary-cyan);
+        background: rgba(5, 10, 20, 0.98);
+        /* Solid/Dark background */
+        width: 70%;
+        /* Not full width, acts as a drawer */
+        height: 100vh;
+        padding: 80px 30px;
+        transition: right 0.4s ease-in-out;
+        border-left: 1px solid rgba(0, 243, 255, 0.2);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        gap: 25px;
+        align-items: flex-start;
+        /* Align text to left */
+        justify-content: flex-start;
     }
 
     .nav-menu.active {
-        top: 80px;
+        right: 0;
+        top: 0;
+        /* Align with top */
     }
 
     .nav-item {
-        margin: 10px 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px 0;
+    }
+
+    .btn-nav {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
     }
 
     /* Timeline Mobile */
@@ -822,24 +867,51 @@ input::placeholder {
     }
 
     .partners-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        /* Force 1 or 2 columns based on width */
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        /* Smaller min-width for mobile columns */
+        gap: 15px;
+    }
+
+    .partner-card {
+        height: auto;
+        /* Allow auto height */
+        min-height: 180px;
+        padding: 20px 10px;
+    }
+
+    .partner-logo {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
     }
 
     .hero {
         min-height: 100vh;
         /* Allow it to be exactly screen height on mobile */
+        padding-top: 80px;
+        /* Account for navbar */
     }
 
     .logo-text {
         font-size: 1rem;
         /* Prevent overflow on small screens */
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        /* Even smaller for very small screens */
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        padding: 6px 12px;
     }
 
     .section-title {
@@ -849,6 +921,16 @@ input::placeholder {
     .container {
         width: 94%;
         padding: 0 15px;
+    }
+
+    .logo-img {
+        height: 35px;
+    }
+
+    .partners-grid {
+        grid-template-columns: 1fr 1fr;
+        /* Force 2 cols? Or keep auto-fill */
+        /* partial override from above if needed, but auto-fill 140px should work for 2 cols on ~360px+ screens */
     }
 }
 
